@@ -40,11 +40,34 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ s
   const { slug } = await params;
 
   const request = await fetch(`${ BASE_URL }/api/events/${ slug }`);
-    const responseJson = await request.json();
-    if (!responseJson || typeof responseJson !== 'object' || !responseJson.event) {
-      return notFound();
-    }
-    const { description, image, overview, date, time, location, mode, agenda, audience, tags, organizer, _id, slug: eventSlug } = responseJson.event;
+  
+  // Parse JSON with error handling
+  let responseJson: { event?: unknown } | null = null;
+  try {
+    responseJson = await request.json();
+  } catch (error) {
+    console.error('Failed to parse JSON response:', error);
+    return notFound();
+  }
+  
+  if (!responseJson || typeof responseJson !== 'object' || !responseJson.event) {
+    return notFound();
+  }
+  
+  const event = responseJson.event as Record<string, unknown>;
+  const description = event.description as string;
+  const image = event.image as string;
+  const overview = event.overview as string;
+  const date = event.date as string;
+  const time = event.time as string;
+  const location = event.location as string;
+  const mode = event.mode as string;
+  const agenda = event.agenda as string[];
+  const audience = event.audience as string;
+  const tags = event.tags as string[];
+  const organizer = event.organizer as string;
+  const _id = event._id as string;
+  const eventSlug = event.slug as string;
 
   if (!description) return notFound();
 
