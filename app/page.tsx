@@ -1,7 +1,7 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { cacheLife } from "next/cache";
-import { events } from "@/lib/constants";
+import { events, EventItem } from "@/lib/constants";
 
 export default async function page() {
   'use cache';
@@ -21,7 +21,7 @@ export default async function page() {
         <h3>Featured Events</h3>
 
         <ul className="events">
-          { events && events.length > 0 && events.map((event) => (
+          {events.map((event: EventItem) => (
             <li key={event.title} className="list-none">
               <EventCard {...event} />
             </li>
