@@ -17,7 +17,7 @@ export async function GET(
 
         const { slug } = await params;
 
-        if (!slug || typeof slug != 'string' || slug.trim() == '') {
+            if (!slug || typeof slug !== 'string' || slug.trim() === '') {
             return NextResponse.json({ message: 'Invalid or missing slug parameter' }, { status: 400 });
         };
 
