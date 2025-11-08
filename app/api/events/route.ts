@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
     } catch (e) {
         console.error(e);
         return NextResponse.json({ message: "Event Creation Failed", error: e instanceof Error ? e.message : "Unknown" }, { status: 500 });
-    };
+    }
 }
 
 export async function GET() {
